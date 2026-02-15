@@ -8,8 +8,8 @@ import ru.yandex.practicum.util.SensorEventType;
 
 @Getter
 @Setter
-@ToString
-public class TemperatureSensorEvent extends SensorEvent {
+@ToString(callSuper = true)
+public  class TemperatureSensorEvent extends SensorEvent {
     @NotNull
     private int temperatureC;
 
@@ -20,4 +20,5 @@ public class TemperatureSensorEvent extends SensorEvent {
     public SensorEventType getType() {
         return SensorEventType.TEMPERATURE_SENSOR_EVENT;
     }
+
 }

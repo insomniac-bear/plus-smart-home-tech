@@ -1,16 +1,15 @@
 package ru.yandex.practicum.dto;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ru.yandex.practicum.util.SensorEventType;
 
-@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class ClimateSensorEvent extends SensorEvent {
     @NotNull
     private int temperatureC;
@@ -19,10 +18,11 @@ public class ClimateSensorEvent extends SensorEvent {
     private int humidity;
 
     @NotNull
-    int co2Level;
+    private int co2Level;
 
     @Override
     public SensorEventType getType() {
-        return SensorEventType.TEMPERATURE_SENSOR_EVENT;
+        return SensorEventType.CLIMATE_SENSOR_EVENT;
     }
+
 }

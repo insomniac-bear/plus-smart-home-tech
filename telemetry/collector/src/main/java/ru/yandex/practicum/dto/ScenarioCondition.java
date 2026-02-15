@@ -13,7 +13,7 @@ import ru.yandex.practicum.util.ConditionType;
 @ToString
 public class ScenarioCondition {
     @NotBlank
-    private String scenarioId;
+    private String sensorId;
 
     @NotNull
     private ConditionType type;
