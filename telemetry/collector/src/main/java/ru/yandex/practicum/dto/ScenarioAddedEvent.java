@@ -22,7 +22,7 @@ public class ScenarioAddedEvent extends HubEvent {
     private List<ScenarioCondition> conditions;
 
     @NotEmpty
-    List<DeviceAction> actions;
+    private List<DeviceAction> actions;
 
     @Override
     public HubEventType getType() {

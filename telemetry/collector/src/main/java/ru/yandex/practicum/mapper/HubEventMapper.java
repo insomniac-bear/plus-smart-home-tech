@@ -3,7 +3,17 @@ package ru.yandex.practicum.mapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.dto.*;
-import ru.yandex.practicum.kafka.telemetry.event.*;
+import ru.yandex.practicum.kafka.telemetry.event.ActionTypeAvro;
+import ru.yandex.practicum.kafka.telemetry.event.ConditionOperationAvro;
+import ru.yandex.practicum.kafka.telemetry.event.ConditionTypeAvro;
+import ru.yandex.practicum.kafka.telemetry.event.DeviceActionAvro;
+import ru.yandex.practicum.kafka.telemetry.event.DeviceAddedEventAvro;
+import ru.yandex.practicum.kafka.telemetry.event.DeviceRemovedEventAvro;
+import ru.yandex.practicum.kafka.telemetry.event.DeviceTypeAvro;
+import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
+import ru.yandex.practicum.kafka.telemetry.event.ScenarioAddedEventAvro;
+import ru.yandex.practicum.kafka.telemetry.event.ScenarioConditionAvro;
+import ru.yandex.practicum.kafka.telemetry.event.ScenarioRemovedEventAvro;
 
 import java.util.stream.Collectors;
 
