@@ -1,9 +1,11 @@
 package ru.yandex.practicum.service.handler.sensor;
 
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;
 import ru.yandex.practicum.service.ProducerService;
 
+@Component
 public class ClimateSensorEvent extends BaseSensorEventHandler<ClimateSensorAvro> {
 
     public ClimateSensorEvent(ProducerService producer, String sensorTopic) {
