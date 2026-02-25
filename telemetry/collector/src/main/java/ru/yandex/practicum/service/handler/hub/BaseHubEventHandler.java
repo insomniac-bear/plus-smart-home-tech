@@ -1,14 +1,15 @@
 package ru.yandex.practicum.service.handler.hub;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
-import org.springframework.beans.factory.annotation.Value;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.HubEventAvro;
 import ru.yandex.practicum.service.ProducerService;
 
 import java.time.Instant;
 
+@Slf4j
 @RequiredArgsConstructor
 public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implements HubEventHandler {
     protected final ProducerService producer;
@@ -35,6 +36,7 @@ public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implemen
                 .setPayload(payload)
                 .build();
 
+        log.info("Отправляю событе сенсора {} в топик {}", event, hubTopic);
         producer.send(hubTopic, event.getHubId(), eventAvro);
     }
 }

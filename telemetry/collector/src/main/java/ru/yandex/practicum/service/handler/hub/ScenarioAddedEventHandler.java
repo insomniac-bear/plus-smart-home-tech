@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Component
 public class ScenarioAddedEventHandler extends BaseHubEventHandler<ScenarioAddedEventAvro>{
 
-    public ScenarioAddedEventHandler(ProducerService producer, String hubTopic) {
+    protected ScenarioAddedEventHandler(ProducerService producer, String hubTopic) {
         super(producer, hubTopic);
     }
 
