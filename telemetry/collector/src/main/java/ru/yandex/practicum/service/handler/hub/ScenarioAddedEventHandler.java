@@ -3,6 +3,7 @@ package ru.yandex.practicum.service.handler.hub;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
+import ru.yandex.practicum.grpc.telemetry.event.ScenarioConditionProto;
 import ru.yandex.practicum.kafka.telemetry.event.ActionTypeAvro;
 import ru.yandex.practicum.kafka.telemetry.event.ConditionOperationAvro;
 import ru.yandex.practicum.kafka.telemetry.event.ConditionTypeAvro;
@@ -11,6 +12,7 @@ import ru.yandex.practicum.kafka.telemetry.event.ScenarioAddedEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioConditionAvro;
 import ru.yandex.practicum.service.ProducerService;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,24 +30,37 @@ public class ScenarioAddedEventHandler extends BaseHubEventHandler<ScenarioAdded
 
     @Override
     protected ScenarioAddedEventAvro mapToAvro(HubEventProto event) {
+
+        List<ScenarioConditionAvro> conditions = event.getScenarioAdded().getConditionsList().stream()
+                .map(condition -> {
+                    ScenarioConditionAvro.Builder builder = ScenarioConditionAvro.newBuilder()
+                            .setSensorId(condition.getSensorId())
+                            .setType(ConditionTypeAvro.valueOf(condition.getType().name()))
+                            .setOperation(ConditionOperationAvro.valueOf(condition.getOperation().name()));
+
+                    switch(condition.getValueCase()) {
+                        case INT_VALUE ->builder.setValue(condition.getIntValue());
+                        case BOOL_VALUE -> builder.setValue(condition.getBoolValue());
+                        case VALUE_NOT_SET -> builder.setValue(null);
+                    }
+
+                    return builder.build();
+                })
+                .toList();
+
+        List<DeviceActionAvro> actions = event.getScenarioAdded().getActionList().stream()
+                .map(action -> DeviceActionAvro.newBuilder()
+                        .setSensorId(action.getSensorId())
+                        .setType(ActionTypeAvro.valueOf(action.getType().name()))
+                        .setValue(action.getValue())
+                        .build())
+                .toList();
+
+
         return ScenarioAddedEventAvro.newBuilder()
                 .setName(event.getScenarioAdded().getName())
-                .setConditions(event.getScenarioAdded().getConditionsList().stream()
-                        .map(scenario -> ScenarioConditionAvro.newBuilder()
-                                .setOperation(ConditionOperationAvro.valueOf(scenario.getOperation().name()))
-                                .setType(ConditionTypeAvro.valueOf(scenario.getType().name()))
-                                .setSensorId(scenario.getSensorId())
-                                .build()
-                        )
-                        .collect(Collectors.toList()))
-                .setActions(event.getScenarioAdded().getActionList().stream()
-                        .map(action -> DeviceActionAvro.newBuilder()
-                                .setType(ActionTypeAvro.valueOf(action.getType().name()))
-                                .setSensorId(action.getSensorId())
-                                .setValue(action.getValue())
-                                .build()
-                        )
-                        .collect(Collectors.toList()))
+                .setConditions(conditions)
+                .setActions(actions)
                 .build();
     }
 }
