@@ -6,22 +6,28 @@ import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.specific.SpecificDatumWriter;
 import org.apache.avro.specific.SpecificRecordBase;
+import org.apache.kafka.common.serialization.Serializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 @Slf4j
-public class AvroSerializer {
-    public static <T extends SpecificRecordBase> byte[] serialize(T record) {
+public class AvroSerializer implements Serializer<SpecificRecordBase> {
+    private final EncoderFactory encoderFactory = EncoderFactory.get();
+    private BinaryEncoder encoder;
+
+    public byte[] serialize(String topic, SpecificRecordBase data) {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            DatumWriter<T> writer = new SpecificDatumWriter<>(record.getSchema());
-            BinaryEncoder encoder = EncoderFactory.get().binaryEncoder(outputStream, null);
-            writer.write(record, encoder);
-            encoder.flush();
+            if (data != null) {
+                DatumWriter<SpecificRecordBase> writer = new SpecificDatumWriter<>(data.getSchema());
+                encoder = encoderFactory.binaryEncoder(outputStream, encoder);
+                writer.write(data, encoder);
+                encoder.flush();
+            }
             return outputStream.toByteArray();
         } catch (IOException e) {
-            log.error("Ошибка сериализации {}: {}", record.getClass(), e.getMessage());
-            throw new RuntimeException("Ошибка сериализации " + record.getClass(), e);
+            log.error("Ошибка сериализации {}: {}", data, e.getMessage());
+            throw new RuntimeException("Ошибка сериализации " + data, e);
         }
     }
 }

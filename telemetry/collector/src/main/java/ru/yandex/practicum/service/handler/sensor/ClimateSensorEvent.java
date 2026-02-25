@@ -2,8 +2,13 @@ package ru.yandex.practicum.service.handler.sensor;
 
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.ClimateSensorAvro;
+import ru.yandex.practicum.service.ProducerService;
 
 public class ClimateSensorEvent extends BaseSensorEventHandler<ClimateSensorAvro> {
+
+    public ClimateSensorEvent(ProducerService producer, String sensorTopic) {
+        super(producer, sensorTopic);
+    }
 
     @Override
     public SensorEventProto.PayloadCase getMessageType() {

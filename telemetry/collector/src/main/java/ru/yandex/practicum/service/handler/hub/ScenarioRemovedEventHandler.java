@@ -2,8 +2,13 @@ package ru.yandex.practicum.service.handler.hub;
 
 import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioRemovedEventAvro;
+import ru.yandex.practicum.service.ProducerService;
 
 public class ScenarioRemovedEventHandler extends BaseHubEventHandler<ScenarioRemovedEventAvro> {
+
+    public ScenarioRemovedEventHandler(ProducerService producer, String hubTopic) {
+        super(producer, hubTopic);
+    }
 
     @Override
     public HubEventProto.PayloadCase getMessageType() {

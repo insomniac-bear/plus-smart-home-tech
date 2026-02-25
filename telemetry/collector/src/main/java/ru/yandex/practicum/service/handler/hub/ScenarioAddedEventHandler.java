@@ -9,12 +9,17 @@ import ru.yandex.practicum.kafka.telemetry.event.ConditionTypeAvro;
 import ru.yandex.practicum.kafka.telemetry.event.DeviceActionAvro;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioAddedEventAvro;
 import ru.yandex.practicum.kafka.telemetry.event.ScenarioConditionAvro;
+import ru.yandex.practicum.service.ProducerService;
 
 import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 public class ScenarioAddedEventHandler extends BaseHubEventHandler<ScenarioAddedEventAvro>{
+
+    public ScenarioAddedEventHandler(ProducerService producer, String hubTopic) {
+        super(producer, hubTopic);
+    }
 
     @Override
     public HubEventProto.PayloadCase getMessageType() {

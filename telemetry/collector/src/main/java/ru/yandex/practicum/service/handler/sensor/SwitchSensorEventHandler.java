@@ -2,8 +2,13 @@ package ru.yandex.practicum.service.handler.sensor;
 
 import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.SwitchSensorAvro;
+import ru.yandex.practicum.service.ProducerService;
 
 public class SwitchSensorEventHandler extends BaseSensorEventHandler<SwitchSensorAvro> {
+
+    public SwitchSensorEventHandler(ProducerService producer, String sensorTopic) {
+        super(producer, sensorTopic);
+    }
 
     @Override
     public SensorEventProto.PayloadCase getMessageType() {
