@@ -52,7 +52,7 @@ public class AggregatorStarter {
             }
         } catch (WakeupException ignored) {}
             catch (Exception e) {
-                log.error("Ошибка во время обработки событий от сенсоров");
+                log.error("Ошибка во время обработки событий от сенсоров", e);
             } finally {
                 try {
                     producer.flush();

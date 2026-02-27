@@ -25,9 +25,9 @@ public class AggregatorService {
         }
         SensorStateAvro prevState = snapshot.getSensorsState().get(event.getId());
 
-        if (prevState != null && prevState.getTimestamp().isAfter(event.getTimestamp()) ||
-            prevState.getData().equals(event.getPayload())) {
-            log.info("Сщбытие {} уже было обработано", event);
+        if (prevState != null && (prevState.getTimestamp().isAfter(event.getTimestamp()) ||
+            prevState.getData().equals(event.getPayload()))) {
+            log.info("Событие {} уже было обработано", event);
             return Optional.empty();
         }
 
