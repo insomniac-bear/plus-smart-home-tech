@@ -60,13 +60,13 @@ public class KafkaConfig {
     }
 
     @Bean
-    public String snapshotsTopic(@Value("${collector.topics.snapshots}") String snapshotsTopic) {
+    public String snapshotsTopic(@Value("${kafka.topics.snapshots}") String snapshotsTopic) {
         log.info("Настроен топик для снапшотов: {}", snapshotsTopic);
         return snapshotsTopic;
     }
 
     @Bean
-    public String sensorTopic(@Value("${collector.topics.sensors}") String sensorsTopic) {
+    public String sensorsTopic(@Value("${kafka.topics.sensors}") String sensorsTopic) {
         log.info("Настроен топик для сенсоров: {}", sensorsTopic);
         return sensorsTopic;
     }
