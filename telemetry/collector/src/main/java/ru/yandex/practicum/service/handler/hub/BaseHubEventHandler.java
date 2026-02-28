@@ -10,11 +10,16 @@ import ru.yandex.practicum.service.ProducerService;
 import java.time.Instant;
 
 @Slf4j
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public abstract class BaseHubEventHandler<T extends SpecificRecordBase> implements HubEventHandler {
     protected final ProducerService producer;
 
     private final String hubTopic;
+
+    public BaseHubEventHandler(ProducerService producer, String hubTopic) {
+        this.producer = producer;
+        this.hubTopic = hubTopic;
+    }
 
     protected abstract T mapToAvro(HubEventProto event);
 

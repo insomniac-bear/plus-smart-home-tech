@@ -4,12 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.specific.SpecificRecordBase;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.yandex.practicum.serializer.AvroSerializer;
+import serializer.AvroSerializer;
 
 import java.util.Properties;
 
@@ -43,4 +42,5 @@ public class KafkaConfig {
     public String sensorTopic(@Value("${collector.topics.sensors}") String sensorTopic) {
         log.info("Настроен топик для сенсоров: {}", sensorTopic);
         return sensorTopic;
-    }}
+    }
+}

@@ -11,7 +11,7 @@ import ru.yandex.practicum.service.ProducerService;
 public class DeviceRemovedEventHandler extends BaseHubEventHandler<DeviceRemovedEventAvro>{
 
     public DeviceRemovedEventHandler(ProducerService producer, String hubTopic) {
-        super(producer, hubTopic);
+        super(producer, "");
     }
 
     @Override

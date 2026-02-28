@@ -1,6 +1,5 @@
-package ru.yandex.practicum.serializer;
+package serializer;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.io.BinaryEncoder;
 import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.EncoderFactory;
@@ -11,11 +10,19 @@ import org.apache.kafka.common.serialization.Serializer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-@Slf4j
 public class AvroSerializer implements Serializer<SpecificRecordBase> {
-    private final EncoderFactory encoderFactory = EncoderFactory.get();
+    private final EncoderFactory encoderFactory;
     private BinaryEncoder encoder;
 
+    public AvroSerializer() {
+        this.encoderFactory = EncoderFactory.get();
+    }
+
+    public AvroSerializer(EncoderFactory encoderFactory) {
+        this.encoderFactory = encoderFactory;
+    }
+
+    @Override
     public byte[] serialize(String topic, SpecificRecordBase data) {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             if (data != null) {
@@ -26,7 +33,6 @@ public class AvroSerializer implements Serializer<SpecificRecordBase> {
             }
             return outputStream.toByteArray();
         } catch (IOException e) {
-            log.error("Ошибка сериализации {}: {}", data, e.getMessage());
             throw new RuntimeException("Ошибка сериализации " + data, e);
         }
     }
