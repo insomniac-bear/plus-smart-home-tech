@@ -16,7 +16,7 @@ protocol SensorsSnapshotProtocol {
 
 	record SensorsSnapshotAvro {
 		string hubId;
-		timestamp_ms timstamp;
+		timestamp_ms timestamp;
 		map<SensorStateAvro> sensorsState;
 	}
 }

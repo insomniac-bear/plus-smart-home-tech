@@ -37,7 +37,7 @@ public class AggregatorService {
                 .setData(event.getPayload())
                 .build();
 
-        snapshot.setTimstamp(event.getTimestamp());
+        snapshot.setTimestamp(event.getTimestamp());
         snapshot.getSensorsState().put(event.getId(), savingState);
         snapshots.put(event.getHubId(), snapshot);
 
