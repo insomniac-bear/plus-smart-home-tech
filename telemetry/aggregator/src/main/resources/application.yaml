@@ -1,7 +1,10 @@
-server:
-  port: 9090
-kafka:
-  bootstrap-servers: localhost:9092
-  topics:
-    sensors: telemetry.sensors.v1
-    snapshots: telemetry.snapshots.v1
+spring:
+  application:
+    name: aggregator
+
+  config:
+    import: configserver:http://localhost:8888
+    fail-fast: true
+    retry:
+      useRandomPolicy: true
+      max-interval: 6000
