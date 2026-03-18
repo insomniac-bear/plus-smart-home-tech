@@ -43,3 +43,5 @@ services:
       - POSTGRES_PASSWORD=analyzer
       - POSTGRES_USER=analyzer
       - POSTGRES_DB=analyzer
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
