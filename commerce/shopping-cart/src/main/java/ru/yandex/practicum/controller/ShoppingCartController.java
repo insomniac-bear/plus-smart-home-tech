@@ -26,32 +26,32 @@ public class ShoppingCartController {
     private final CartService service;
 
     @GetMapping()
-    public CartDto getShoppingCart(@RequestParam String userName) {
-        log.info("Запрос на получение корзины пользователя {}", userName);
-        return service.getCart(userName);
+    public CartDto getShoppingCart(@RequestParam String username) {
+        log.info("Запрос на получение корзины пользователя {}", username);
+        return service.getCart(username);
     }
 
     @PutMapping()
-    public CartDto addToShoppingCart(@RequestParam String userName, @RequestBody Map<UUID, Integer> products) {
-        log.info("Запрос на добавление товара {} в корзину пользователя {}", products, userName);
-        return service.addToCart(userName, products);
+    public CartDto addToShoppingCart(@RequestParam String username, @RequestBody Map<UUID, Integer> products) {
+        log.info("Запрос на добавление товара {} в корзину пользователя {}", products, username);
+        return service.addToCart(username, products);
     }
 
     @DeleteMapping()
-    public void deleteShoppingCart(@RequestParam String userName) {
-        log.info("Запрос на удаление корзины пользователя {}", userName);
-        service.deleteCart(userName);
+    public void deleteShoppingCart(@RequestParam String username) {
+        log.info("Запрос на удаление корзины пользователя {}", username);
+        service.deleteCart(username);
     }
 
     @PostMapping("/remove")
-    public CartDto removeFromShoppingCart(@RequestParam String userName, @RequestBody List<UUID> productIds) {
-        log.info("Запрос на удаление товаров {} из корзины пользователя {}", productIds, userName);
-        return service.removeFromCart(userName, productIds);
+    public CartDto removeFromShoppingCart(@RequestParam String username, @RequestBody List<UUID> productIds) {
+        log.info("Запрос на удаление товаров {} из корзины пользователя {}", productIds, username);
+        return service.removeFromCart(username, productIds);
     }
 
     @PostMapping("/change-quantity")
-    public CartDto changeQuantity(@RequestParam String userName, @RequestBody ChangeProductQuantityRequestDto products) {
-        log.info("Запрос на изменение количества товаров {} в корзине пользователя {}", products, userName);
-        return service.changeQuantity(userName, products);
+    public CartDto changeQuantity(@RequestParam String username, @RequestBody ChangeProductQuantityRequestDto products) {
+        log.info("Запрос на изменение количества товаров {} в корзине пользователя {}", products, username);
+        return service.changeQuantity(username, products);
     }
 }

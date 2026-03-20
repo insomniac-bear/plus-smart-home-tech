@@ -1,13 +1,13 @@
 package ru.yandex.practicum.dto.exceptions;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 @Getter
 @Setter
-@Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ErrorResponse {
     private HttpStatus httpStatus;
     private String userMessage;
@@ -17,4 +17,5 @@ public class ErrorResponse {
     private Object cause;
     private Object[] suppressed;
     private String localizedMessage;
+    private String timestamp;
 }

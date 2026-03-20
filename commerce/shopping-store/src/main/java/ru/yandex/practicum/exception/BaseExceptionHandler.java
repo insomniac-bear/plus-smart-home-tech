@@ -16,12 +16,11 @@ import java.util.Arrays;
 public class BaseExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductNotFoundException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatus(HttpStatus.NOT_FOUND)
-                .userMessage(ex.getUserMessage())
-                .message(ex.getMessage())
-                .stackTrace(getStackTrace(ex))
-                .build();
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+        errorResponse.setUserMessage(ex.getUserMessage());
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStackTrace(getStackTrace(ex));
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }

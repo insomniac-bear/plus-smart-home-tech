@@ -21,22 +21,20 @@ public class BaseExceptionHandler {
     @ExceptionHandler(ItemAlreadyExistException.class)
     public ResponseEntity<ErrorResponse> handleSpecifiedProductAlreadyInWarehouseException
             (ItemAlreadyExistException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
-                .userMessage(ex.getUserMessage())
-                .ex("ItemAlreadyExistException")
-                .message(ex.getMessage())
-                .stackTrace(getStackTrace(ex))
-                .build();
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+        errorResponse.setUserMessage(ex.getUserMessage());
+        errorResponse.setEx("ItemAlreadyExistException");
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStackTrace(getStackTrace(ex));
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(LowQuantityException.class)
     public ResponseEntity<ErrorResponseForWarehouseCheck> handleProductInShoppingCartLowQuantityInWarehouse
             (LowQuantityException ex) {
-        ErrorResponseForWarehouseCheck errorResponse = ErrorResponseForWarehouseCheck.builder()
-                .missingProducts(ex.getMissingProducts())
-                .build();
+        ErrorResponseForWarehouseCheck errorResponse = new ErrorResponseForWarehouseCheck();
+        errorResponse.setMissingProducts(ex.getMissingProducts());
         errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
         errorResponse.setUserMessage(ex.getUserMessage());
         errorResponse.setMessage(ex.getMessage());
@@ -48,13 +46,12 @@ public class BaseExceptionHandler {
     @ExceptionHandler(ProductNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleNoSpecifiedProductInWarehouseException
             (ProductNotFoundException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-            .httpStatus(HttpStatus.BAD_REQUEST)
-                .userMessage(ex.getUserMessage())
-                .ex("ProductNotFoundException")
-                .message(ex.getMessage())
-                .stackTrace(getStackTrace(ex))
-                .build();
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+        errorResponse.setUserMessage(ex.getUserMessage());
+        errorResponse.setEx("ProductNotFoundException");
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStackTrace(getStackTrace(ex));
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 

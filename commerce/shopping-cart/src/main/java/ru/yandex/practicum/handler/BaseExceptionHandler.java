@@ -19,21 +19,19 @@ import java.util.Arrays;
 public class BaseExceptionHandler {
     @ExceptionHandler(UnauthorizedException.class)
     public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatus(HttpStatus.UNAUTHORIZED)
-                .userMessage(ex.getUserMessage())
-                .message(ex.getMessage())
-                .stackTrace(getStackTrace(ex))
-                .build();
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setHttpStatus(HttpStatus.UNAUTHORIZED);
+        errorResponse.setUserMessage(ex.getUserMessage());
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStackTrace(getStackTrace(ex));
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(LowQuantityException.class)
     public ResponseEntity<ErrorResponseForWarehouseCheck> handleProductInShoppingCartLowQuantityInWarehouse
             (LowQuantityException ex) {
-        ErrorResponseForWarehouseCheck errorResponse = ErrorResponseForWarehouseCheck.builder()
-                .missingProducts(ex.getMissingProducts())
-                .build();
+        ErrorResponseForWarehouseCheck errorResponse = new ErrorResponseForWarehouseCheck();
+        errorResponse.setMissingProducts(ex.getMissingProducts());
         errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
         errorResponse.setUserMessage(ex.getUserMessage());
         errorResponse.setMessage(ex.getMessage());
@@ -44,12 +42,11 @@ public class BaseExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundInCartException.class)
     public ResponseEntity<ErrorResponse> handleNoProductsInShoppingCartException(ProductNotFoundInCartException ex) {
-        ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
-                .userMessage(ex.getUserMessage())
-                .message(ex.getMessage())
-                .stackTrace(getStackTrace(ex))
-                .build();
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+        errorResponse.setUserMessage(ex.getUserMessage());
+        errorResponse.setMessage(ex.getMessage());
+        errorResponse.setStackTrace(getStackTrace(ex));
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
