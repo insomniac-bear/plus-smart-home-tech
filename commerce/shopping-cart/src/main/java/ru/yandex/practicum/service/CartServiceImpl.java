@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.yandex.practicum.client.WarehouseClient;
 import ru.yandex.practicum.dto.cart.CartDto;
-import ru.yandex.practicum.dto.cart.ChangeCartRequestDto;
+import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequestDto;
 import ru.yandex.practicum.entity.Cart;
+import ru.yandex.practicum.exceptions.LowQuantityException;
 import ru.yandex.practicum.exceptions.ProductNotFoundInCartException;
 import ru.yandex.practicum.mapper.CartMapper;
 import ru.yandex.practicum.repository.CartRepository;
@@ -25,6 +27,7 @@ import java.util.UUID;
 public class CartServiceImpl implements CartService {
     private final CartRepository repository;
     private final CartMapper mapper;
+    private final WarehouseClient warehouseClient;
 
     @Override
     public CartDto getCart(String userId) {
@@ -38,6 +41,14 @@ public class CartServiceImpl implements CartService {
     public CartDto addToCart(String userName, Map<UUID, Integer> products) {
         Cart cart = getOrCreateCart(userName);
         cart.getProducts().putAll(products);
+
+        try {
+            warehouseClient.checkProductQuantity(mapper.toDto(cart));
+        } catch (LowQuantityException e) {
+            log.info("Недостаточно товаров на складе для корзины {}", cart.getId());
+            throw e;
+        }
+
         repository.save(cart);
         log.info("Товары {} добавлены в корзину для пользователя {}", products, userName);
         return mapper.toDto(cart);
@@ -68,16 +79,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
-    public CartDto changeQuantity(String userName, ChangeCartRequestDto changeCartRequestDto) {
+    public CartDto changeQuantity(String userName, ChangeProductQuantityRequestDto changeProductQuantityRequestDto) {
         Cart cart = findCart(userName);
 
-        UUID productId = changeCartRequestDto.getProductId();
+        UUID productId = changeProductQuantityRequestDto.getProductId();
         validateProductInCart(cart, productId);
 
-        cart.getProducts().put(productId, changeCartRequestDto.getQuantity());
+        cart.getProducts().put(productId, changeProductQuantityRequestDto.getQuantity());
         repository.save(cart);
         log.info("Количество товара {} в корзине для пользователя {} изменено на {}", productId, userName,
-                changeCartRequestDto.getQuantity());
+                changeProductQuantityRequestDto.getQuantity());
         return mapper.toDto(cart);
     }
 

@@ -1,4 +1,4 @@
-package ru.yandex.practicum.dto.cart;
+package ru.yandex.practicum.dto.warehouse;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -7,18 +7,20 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChangeCartRequestDto {
-
+public class DimensionDto {
     @NotNull
-    UUID productId;
+    @Min(1)
+    Double width;
 
     @NotNull
     @Min(1)
-    Integer quantity;
+    Double height;
+
+    @NotNull
+    @Min(1)
+    Double depth;
 }

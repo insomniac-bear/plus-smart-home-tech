@@ -1,7 +1,7 @@
 package ru.yandex.practicum.service;
 
 import ru.yandex.practicum.dto.cart.CartDto;
-import ru.yandex.practicum.dto.cart.ChangeCartRequestDto;
+import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequestDto;
 
 import java.util.List;
 import java.util.Map;
@@ -17,5 +17,5 @@ public interface CartService {
 
     CartDto removeFromCart(String userName, List<UUID> productIds);
 
-    CartDto changeQuantity(String userName, ChangeCartRequestDto changeCartRequestDto);
+    CartDto changeQuantity(String userName, ChangeProductQuantityRequestDto changeProductQuantityRequestDto);
 }

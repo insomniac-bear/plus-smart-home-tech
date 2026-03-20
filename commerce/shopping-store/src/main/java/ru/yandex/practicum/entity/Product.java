@@ -33,7 +33,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    UUID id;
+    private UUID id;
 
     @NotBlank
     @Column(name = "product_name")

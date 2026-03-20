@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.dto.cart.CartDto;
-import ru.yandex.practicum.dto.cart.ChangeCartRequestDto;
+import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequestDto;
 import ru.yandex.practicum.service.CartService;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/change-quantity")
-    public CartDto changeQuantity(@RequestParam String userName, @RequestBody ChangeCartRequestDto products) {
+    public CartDto changeQuantity(@RequestParam String userName, @RequestBody ChangeProductQuantityRequestDto products) {
         log.info("Запрос на изменение количества товаров {} в корзине пользователя {}", products, userName);
         return service.changeQuantity(userName, products);
     }

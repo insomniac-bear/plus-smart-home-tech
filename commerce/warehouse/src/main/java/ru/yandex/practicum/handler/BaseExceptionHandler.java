@@ -6,26 +6,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.yandex.practicum.dto.exceptions.ErrorResponse;
-import ru.yandex.practicum.dto.exceptions.StackTraceElementDto;
 import ru.yandex.practicum.dto.exceptions.ErrorResponseForWarehouseCheck;
+import ru.yandex.practicum.dto.exceptions.StackTraceElementDto;
+import ru.yandex.practicum.exceptions.ItemAlreadyExistException;
 import ru.yandex.practicum.exceptions.LowQuantityException;
-import ru.yandex.practicum.exceptions.ProductNotFoundInCartException;
-import ru.yandex.practicum.exceptions.UnauthorizedException;
+import ru.yandex.practicum.exceptions.ProductNotFoundException;
 
 import java.util.Arrays;
 
 @Slf4j
 @RestControllerAdvice
 public class BaseExceptionHandler {
-    @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException ex) {
+
+    @ExceptionHandler(ItemAlreadyExistException.class)
+    public ResponseEntity<ErrorResponse> handleSpecifiedProductAlreadyInWarehouseException
+            (ItemAlreadyExistException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .httpStatus(HttpStatus.BAD_REQUEST)
                 .userMessage(ex.getUserMessage())
+                .ex("ItemAlreadyExistException")
                 .message(ex.getMessage())
                 .stackTrace(getStackTrace(ex))
                 .build();
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(LowQuantityException.class)
@@ -42,17 +45,18 @@ public class BaseExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ProductNotFoundInCartException.class)
-    public ResponseEntity<ErrorResponse> handleNoProductsInShoppingCartException(ProductNotFoundInCartException ex) {
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoSpecifiedProductInWarehouseException
+            (ProductNotFoundException ex) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .httpStatus(HttpStatus.BAD_REQUEST)
+            .httpStatus(HttpStatus.BAD_REQUEST)
                 .userMessage(ex.getUserMessage())
+                .ex("ProductNotFoundException")
                 .message(ex.getMessage())
                 .stackTrace(getStackTrace(ex))
                 .build();
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
-
 
     private StackTraceElementDto[] getStackTrace(Throwable ex) {
         return Arrays.stream(ex.getStackTrace())
