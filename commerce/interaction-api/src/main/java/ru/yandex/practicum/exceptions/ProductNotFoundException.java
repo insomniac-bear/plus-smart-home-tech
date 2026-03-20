@@ -1,15 +1,16 @@
 package ru.yandex.practicum.exceptions;
 
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 
 @Getter
 public class ProductNotFoundException extends RuntimeException {
         private final String userMessage;
-        private final String httpStatus;
+        private final HttpStatus httpStatus;
 
         public ProductNotFoundException(String message, String userMessage) {
             super(message);
             this.userMessage = userMessage;
-            this.httpStatus = "404 NOT_FOUND";
+            this.httpStatus = HttpStatus.NOT_FOUND;
         }
 }
