@@ -13,3 +13,7 @@ feign:
     config:
       warehouse:
         loggerLevel: full
+
+logging:
+  level:
+    ru.yandex.practicum.client.WarehouseClient: DEBUG
