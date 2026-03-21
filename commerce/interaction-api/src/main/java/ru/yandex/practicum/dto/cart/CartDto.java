@@ -16,9 +16,17 @@ import java.util.UUID;
 @NoArgsConstructor
 public class CartDto {
 
-    @NotNull
+    @NotNull(message = "Shopping cart id cannot be null")
     private UUID shoppingCartId;
 
-    @NotEmpty
+    @NotEmpty(message = "Products cannot be empty")
     private Map<UUID, Integer> products;
+
+    @Override
+    public String toString() {
+        return "CartDto{" +
+                "shoppingCartId=" + shoppingCartId +
+                ", products=" + products +
+                '}';
+    }
 }

@@ -21,4 +21,12 @@ public class ChangeProductQuantityRequestDto {
     @NotNull
     @Min(1)
     Integer quantity;
+
+    @Override
+    public String toString() {
+        return "ChangeProductQuantityRequestDto{" +
+                "productId=" + productId +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

@@ -63,6 +63,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
+    @Transactional
     public ReservedItemDto checkProductQuantity(CartDto cart) {
         log.info("Резервирование товаров для корзины: {}", cart.getShoppingCartId());
 

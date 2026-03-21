@@ -43,9 +43,11 @@ public class CartServiceImpl implements CartService {
         cart.getProducts().putAll(products);
 
         try {
-            warehouseClient.checkProductQuantity(mapper.toDto(cart));
+            log.info("Проверка доступности товаров на складе для корзины {}", cart);
+            CartDto cartDto = mapper.toDto(cart);
+            warehouseClient.checkProductQuantity(cartDto);
         } catch (LowQuantityException e) {
-            log.info("Недостаточно товаров на складе для корзины {}", cart.getId());
+            log.error("Недостаточно товаров на складе для корзины {}", cart.getId());
             throw e;
         }
 
