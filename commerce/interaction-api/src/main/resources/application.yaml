@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: interaction-api
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname:localhost}:${eureka.instance.port:8761}/eureka/
+    enabled: true
+    register-with-eureka: true
+    fetch-registry: true
+feign:
+  client:
+    config:
+      warehouse:
+        loggerLevel: full
+
+logging:
+  level:
+    ru.yandex.practicum.client.WarehouseClient: DEBUG
