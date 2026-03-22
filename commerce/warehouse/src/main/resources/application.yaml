@@ -1,7 +1,6 @@
 spring:
   application:
     name: warehouse
-
   config:
     import: "configserver:"
     fail-fast: true
@@ -10,7 +9,6 @@ spring:
       initial-interval: 1000
       multiplier: 2
       max-interval: 5000
-
   cloud:
     config:
       discovery:
@@ -26,3 +24,7 @@ eureka:
     hostname: localhost
     instance-id: ${spring.application.name}:${random.value}
     lease-renewal-interval-in-seconds: 10
+
+  logging:
+    level:
+      org.springframework.web: DEBUG

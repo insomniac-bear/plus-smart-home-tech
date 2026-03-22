@@ -3,6 +3,7 @@ package ru.yandex.practicum.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,10 +47,12 @@ public class WarehouseController {
         service.addItemQuantity(request);
     }
 
-    @GetMapping("/address")
+    @GetMapping(value = "/address", produces = MediaType.APPLICATION_JSON_VALUE)
     public AddressDto getWarehouseAddress() {
         log.info("GET /address - получение адреса склада");
-        return service.getAddress();
+        AddressDto address = service.getAddress();
+        log.info("GET /address - адрес склада: {}", address);
+        return address;
     }
 
     @DeleteMapping("/reservation")

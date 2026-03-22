@@ -17,14 +17,14 @@ import java.util.UUID;
 @NoArgsConstructor
 public class AddNewItemInWarehouseRequest {
     @NotNull
-    UUID productId;
+    private UUID productId;
 
-    Boolean fragile;
+    private Boolean fragile;
 
     @NotNull
-    DimensionDto dimension;
+    private DimensionDto dimension;
 
     @NotNull
     @Min(1)
-    Double weight;
+    private Double weight;
 }

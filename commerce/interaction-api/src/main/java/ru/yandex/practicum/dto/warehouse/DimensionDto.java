@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class DimensionDto {
     @NotNull
     @Min(1)
-    Double width;
+    private Double width;
 
     @NotNull
     @Min(1)
-    Double height;
+    private Double height;
 
     @NotNull
     @Min(1)
-    Double depth;
+    private Double depth;
 }

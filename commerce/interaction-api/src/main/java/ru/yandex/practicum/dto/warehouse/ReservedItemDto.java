@@ -2,13 +2,15 @@ package ru.yandex.practicum.dto.warehouse;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReservedItemDto {
-    Double deliveryWeight;
-    Double deliveryVolume;
-    Boolean fragile;
+    private Double deliveryWeight;
+    private Double deliveryVolume;
+    private Boolean fragile;
 }
