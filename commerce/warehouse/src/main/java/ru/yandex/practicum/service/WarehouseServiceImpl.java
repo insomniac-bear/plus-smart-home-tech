@@ -113,7 +113,6 @@ public class WarehouseServiceImpl implements WarehouseService {
             long requestedQuantity = entry.getValue();
             Item item = products.get(productId);
 
-//            item.setQuantity(item.getQuantity() - requestedQuantity);
             item.setReservedQuantity(item.getReservedQuantity() + requestedQuantity);
             itemRepository.save(item);
 
