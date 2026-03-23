@@ -102,7 +102,7 @@ public class CartServiceImpl implements CartService {
     private Cart getOrCreateCart(String userName) {
         return repository.findByUserName(userName)
                 .orElseGet(() -> {
-                    Cart newCart = repository.save(new Cart(UUID.randomUUID(), userName, new HashMap<>()));
+                    Cart newCart = repository.save(new Cart(null, userName, new HashMap<>()));
                     log.info("Создана новая корзина для пользователя {}", userName);
                     return newCart;
                 });
