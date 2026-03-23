@@ -51,4 +51,18 @@ public class Item {
     @Column(name = "reserved_quantity")
     @NotNull
     private long reservedQuantity;
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", fragile=" + fragile +
+                ", width=" + width +
+                ", height=" + height +
+                ", depth=" + depth +
+                ", weight=" + weight +
+                ", quantity=" + quantity +
+                ", reservedQuantity=" + reservedQuantity +
+                '}';
+    }
 }

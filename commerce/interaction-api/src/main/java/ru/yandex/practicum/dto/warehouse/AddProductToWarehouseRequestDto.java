@@ -22,4 +22,12 @@ public class AddProductToWarehouseRequestDto {
     @NotNull
     @Min(1)
     private int quantity;
+
+    @Override
+    public String toString() {
+        return "AddProductToWarehouseRequestDto{" +
+                "productId=" + productId +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

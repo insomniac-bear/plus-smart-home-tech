@@ -48,6 +48,7 @@ public class CartServiceImpl implements CartService {
             CartDto cartDto = mapper.toDto(cart);
             warehouseClient.checkProductQuantity(cartDto);
         } catch (LowQuantityException e) {
+            log.error("Ошибка при проверке доступности товаров на складе: {}", e.getMessage());
             log.error("Недостаточно товаров на складе для корзины {}", cart.getId());
             throw e;
         }
@@ -71,6 +72,8 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public CartDto removeFromCart(String userName, List<UUID> productIds) {
         Cart cart = findCart(userName);
+
+        log.info("Получена корзина {} для пользователя {}", cart, userName);
 
         productIds.forEach(productId -> {
             validateProductInCart(cart, productId);
@@ -115,7 +118,7 @@ public class CartServiceImpl implements CartService {
 
     private void validateProductInCart(Cart cart, UUID productId) {
         log.info("Проверка наличия товара {} в корзине {}", productId, cart);
-        if (cart.getProducts().containsKey(productId)) {
+        if (!cart.getProducts().containsKey(productId)) {
             log.info("Товар {} не найден в корзине {}", productId, cart);
             throw new ProductNotFoundInCartException("Bad request", "Товар с id " + productId + " не найден в корзине");
         }
