@@ -1,0 +1,16 @@
+package ru.yandex.practicum.exceptions;
+
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
+public class ItemAlreadyExistException extends RuntimeException {
+    private final String userMessage;
+    private final HttpStatus httpStatus;
+
+    public ItemAlreadyExistException(String message, String userMessage) {
+        super(message);
+        this.userMessage = message;
+        this.httpStatus = HttpStatus.BAD_REQUEST;
+    }
+}

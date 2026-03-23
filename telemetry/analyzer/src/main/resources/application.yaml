@@ -1,30 +1,20 @@
-server:
-  port: 9091
-grpc:
-  client:
-    hub-router:
-      address: static://localhost:59090
-      enableKeepAlive: true
-      keepAliveWithoutCalls: true
-      negotiationType: plaintext
-
 spring:
-  jpa:
-    hibernate:
-      ddl-auto: none
-      format_sql: true
-  sql:
-    init:
-      mode: always
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:6543/analyzer
-    username: analyzer
-    password: analyzer
+  application:
+    name: analyzer
+  config:
+    import: "configserver:"
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: config-server
 
-
-kafka:
-  bootstrap-servers: localhost:9092
-  topic:
-    hubs: telemetry.hubs.v1
-    snapshots: telemetry.snapshots.v1
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    preferIpAddress: true
+    hostname: localhost
+    instance-id: "${spring.application.name}:${random.value}"
+    leaseRenewalIntervalInSeconds: 10
