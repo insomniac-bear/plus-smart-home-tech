@@ -27,31 +27,31 @@ public class ShoppingCartController {
 
     @GetMapping()
     public CartDto getShoppingCart(@RequestParam String username) {
-        log.info("Запрос на получение корзины пользователя {}", username);
+        log.info("GET /shopping-cart - Запрос на получение корзины пользователя {}", username);
         return service.getCart(username);
     }
 
     @PutMapping()
     public CartDto addToShoppingCart(@RequestParam String username, @RequestBody Map<UUID, Integer> products) {
-        log.info("Запрос на добавление товара {} в корзину пользователя {}", products, username);
+        log.info("PUT /shopping-cart - Запрос на добавление товаров {} в корзину пользователя {}", products, username);
         return service.addToCart(username, products);
     }
 
     @DeleteMapping()
     public void deleteShoppingCart(@RequestParam String username) {
-        log.info("Запрос на удаление корзины пользователя {}", username);
+        log.info("DELETE /shopping-cart - Запрос на удаление корзины пользователя {}", username);
         service.deleteCart(username);
     }
 
     @PostMapping("/remove")
     public CartDto removeFromShoppingCart(@RequestParam String username, @RequestBody List<UUID> productIds) {
-        log.info("Запрос на удаление товаров {} из корзины пользователя {}", productIds, username);
+        log.info("POST /remove - Запрос на удаление товаров {} из корзины пользователя {}", productIds, username);
         return service.removeFromCart(username, productIds);
     }
 
     @PostMapping("/change-quantity")
     public CartDto changeQuantity(@RequestParam String username, @RequestBody ChangeProductQuantityRequestDto products) {
-        log.info("Запрос на изменение количества товаров {} в корзине пользователя {}", products, username);
+        log.info("POST /change-quantity - Запрос на изменение количества товаров {} в корзине пользователя {}", products, username);
         return service.changeQuantity(username, products);
     }
 }

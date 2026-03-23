@@ -27,4 +27,14 @@ public class AddNewItemInWarehouseRequest {
     @NotNull
     @Min(1)
     private Double weight;
+
+    @Override
+    public String toString() {
+        return "AddNewItemInWarehouseRequest{" +
+                "productId=" + productId +
+                ", fragile=" + fragile +
+                ", dimension=" + dimension +
+                ", weight=" + weight +
+                '}';
+    }
 }

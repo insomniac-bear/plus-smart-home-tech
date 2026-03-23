@@ -29,4 +29,18 @@ public class UpdateProductDto {
 
     @Min(1)
     private double price;
+
+    @Override
+    public String toString() {
+        return "UpdateProductDto{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", imageSrc='" + imageSrc + '\'' +
+                ", quantityState=" + quantityState +
+                ", productState=" + productState +
+                ", productCategory=" + productCategory +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -1,8 +1,8 @@
 package ru.yandex.practicum.service;
 
 import ru.yandex.practicum.dto.cart.CartDto;
-import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequestDto;
 import ru.yandex.practicum.dto.warehouse.AddNewItemInWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.AddProductToWarehouseRequestDto;
 import ru.yandex.practicum.dto.warehouse.AddressDto;
 import ru.yandex.practicum.dto.warehouse.ReservedItemDto;
 
@@ -13,7 +13,7 @@ public interface WarehouseService {
 
     ReservedItemDto checkProductQuantity(CartDto cart);
 
-    void addItemQuantity(ChangeProductQuantityRequestDto request);
+    void addItemQuantity(AddProductToWarehouseRequestDto request);
 
     AddressDto getAddress();
 

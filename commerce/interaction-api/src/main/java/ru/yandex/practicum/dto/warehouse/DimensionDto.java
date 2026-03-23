@@ -23,4 +23,13 @@ public class DimensionDto {
     @NotNull
     @Min(1)
     private Double depth;
+
+    @Override
+    public String toString() {
+        return "DimensionDto{" +
+                "width=" + width +
+                ", height=" + height +
+                ", depth=" + depth +
+                '}';
+    }
 }

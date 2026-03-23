@@ -39,4 +39,13 @@ public class Cart {
     @Column(name = "quantity")
     @Builder.Default
     private Map<UUID, Integer> products = new HashMap<>();
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", products=" + products +
+                '}';
+    }
 }

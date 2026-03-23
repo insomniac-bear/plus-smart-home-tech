@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.dto.cart.CartDto;
-import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequestDto;
 import ru.yandex.practicum.dto.warehouse.AddNewItemInWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.AddProductToWarehouseRequestDto;
 import ru.yandex.practicum.dto.warehouse.AddressDto;
 import ru.yandex.practicum.dto.warehouse.ReservedItemDto;
 import ru.yandex.practicum.service.WarehouseService;
@@ -42,7 +42,7 @@ public class WarehouseController {
     }
 
     @PostMapping("/add")
-    public void addProductToWarehouse(@RequestBody @Valid ChangeProductQuantityRequestDto request) {
+    public void addProductToWarehouse(@RequestBody @Valid AddProductToWarehouseRequestDto request) {
         log.info("POST /add - пополнение товара на складе: {}", request);
         service.addItemQuantity(request);
     }

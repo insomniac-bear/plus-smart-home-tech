@@ -35,4 +35,18 @@ public class ProductDto {
 
     @Min(1)
     private double price;
+
+    @Override
+    public String toString() {
+        return "ProductDto{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", description='" + description + '\'' +
+                ", imageSrc='" + imageSrc + '\'' +
+                ", quantityState=" + quantityState +
+                ", productState=" + productState +
+                ", productCategory=" + productCategory +
+                ", price=" + price +
+                '}';
+    }
 }

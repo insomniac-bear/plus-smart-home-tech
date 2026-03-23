@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.yandex.practicum.dto.cart.CartDto;
-import ru.yandex.practicum.dto.cart.ChangeProductQuantityRequestDto;
 import ru.yandex.practicum.dto.warehouse.AddNewItemInWarehouseRequest;
+import ru.yandex.practicum.dto.warehouse.AddProductToWarehouseRequestDto;
 import ru.yandex.practicum.dto.warehouse.AddressDto;
 import ru.yandex.practicum.dto.warehouse.ReservedItemDto;
 import ru.yandex.practicum.entity.Item;
@@ -73,6 +73,8 @@ public class WarehouseServiceImpl implements WarehouseService {
                         (map, item) -> map.put(item.getId(), item),
                         HashMap::putAll);
 
+        log.info("Товары на складе: {}", products);
+
         double totalWeight = 0;
         double totalVolume = 0;
         boolean hasFragile = false;
@@ -138,7 +140,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     @Transactional
-    public void addItemQuantity(ChangeProductQuantityRequestDto request) {
+    public void addItemQuantity(AddProductToWarehouseRequestDto request) {
         log.info("Увеличение количества товара {} на складе на {} единиц", request.getProductId(), request.getQuantity());
         Item item = itemRepository.findById(request.getProductId())
                 .orElseThrow(() -> {

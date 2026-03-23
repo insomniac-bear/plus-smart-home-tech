@@ -13,4 +13,13 @@ public class ReservedItemDto {
     private Double deliveryWeight;
     private Double deliveryVolume;
     private Boolean fragile;
+
+    @Override
+    public String toString() {
+        return "ReservedItemDto{" +
+                "deliveryWeight=" + deliveryWeight +
+                ", deliveryVolume=" + deliveryVolume +
+                ", fragile=" + fragile +
+                '}';
+    }
 }

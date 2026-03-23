@@ -40,6 +40,7 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public CartDto addToCart(String userName, Map<UUID, Integer> products) {
         Cart cart = getOrCreateCart(userName);
+        log.info("Получена корзина {} для пользователя {}", cart, userName);
         cart.getProducts().putAll(products);
 
         try {
@@ -61,7 +62,7 @@ public class CartServiceImpl implements CartService {
     public void deleteCart(String userName) {
         Optional<Cart> cart = repository.findByUserName(userName);
         if (cart.isPresent()) {
-            repository.delete(cart.get());
+            repository.deleteById(cart.get().getId());
             log.info("Корзина {} удалена для пользователя {}", cart.get(), userName);
         }
     }
@@ -70,6 +71,7 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public CartDto removeFromCart(String userName, List<UUID> productIds) {
         Cart cart = findCart(userName);
+
         productIds.forEach(productId -> {
             validateProductInCart(cart, productId);
             cart.getProducts().remove(productId);
@@ -87,10 +89,10 @@ public class CartServiceImpl implements CartService {
         UUID productId = changeProductQuantityRequestDto.getProductId();
         validateProductInCart(cart, productId);
 
-        cart.getProducts().put(productId, changeProductQuantityRequestDto.getQuantity());
+        cart.getProducts().put(productId, changeProductQuantityRequestDto.getNewQuantity());
         repository.save(cart);
         log.info("Количество товара {} в корзине для пользователя {} изменено на {}", productId, userName,
-                changeProductQuantityRequestDto.getQuantity());
+                changeProductQuantityRequestDto.getNewQuantity());
         return mapper.toDto(cart);
     }
 
@@ -112,6 +114,7 @@ public class CartServiceImpl implements CartService {
     }
 
     private void validateProductInCart(Cart cart, UUID productId) {
+        log.info("Проверка наличия товара {} в корзине {}", productId, cart);
         if (cart.getProducts().containsKey(productId)) {
             log.info("Товар {} не найден в корзине {}", productId, cart);
             throw new ProductNotFoundInCartException("Bad request", "Товар с id " + productId + " не найден в корзине");

@@ -20,13 +20,13 @@ public class ChangeProductQuantityRequestDto {
 
     @NotNull
     @Min(1)
-    Integer quantity;
+    Integer newQuantity;
 
     @Override
     public String toString() {
         return "ChangeProductQuantityRequestDto{" +
                 "productId=" + productId +
-                ", quantity=" + quantity +
+            ", quantity=" + newQuantity +
                 '}';
     }
 }
